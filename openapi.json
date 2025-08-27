@@ -1,8 +1,9 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Dummy Vehicle SOVD",
-    "version": "1.0.0"
+    "title": "DemoCar SOVD",
+    "version": "0.2",
+    "description": "Realistic demo vehicle with simulated CAN data and web control"
   },
   "servers": [
     {
@@ -15,13 +16,13 @@
         "summary": "Vehicle info",
         "responses": {
           "200": {
-            "description": "Vehicle information",
+            "description": "Basic vehicle information",
             "content": {
               "application/json": {
                 "example": {
                   "name": "DemoCar",
-                  "version": "0.1",
-                  "description": "Test vehicle"
+                  "version": "0.2",
+                  "description": "Realistic demo vehicle with simulated CAN data"
                 }
               }
             }
@@ -31,15 +32,57 @@
     },
     "/components": {
       "get": {
-        "summary": "List components",
+        "summary": "Get current vehicle state",
         "responses": {
           "200": {
-            "description": "Components info",
+            "description": "Current components and state",
             "content": {
               "application/json": {
                 "example": {
-                  "engine": {"status": "ok"},
-                  "battery": {"status": "charging"}
+                  "engine": "running",
+                  "brake": "released",
+                  "battery": {"voltage": 13.2, "status": "charging"},
+                  "rpm": 1200,
+                  "temperature": 78.5
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/command": {
+      "post": {
+        "summary": "Send command to vehicle",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cmd": {"type": "string", "enum": ["START_ENGINE","STOP_ENGINE","APPLY_BRAKE","RELEASE_BRAKE"]}
+                },
+                "required": ["cmd"]
+              },
+              "example": {"cmd": "START_ENGINE"}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Command received and vehicle state updated",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "ok",
+                  "vehicle_state": {
+                    "engine": "running",
+                    "brake": "released",
+                    "battery": {"voltage": 13.2, "status": "charging"},
+                    "rpm": 1200,
+                    "temperature": 78.5
+                  }
                 }
               }
             }
