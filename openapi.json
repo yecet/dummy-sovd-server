@@ -1,0 +1,51 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Dummy Vehicle SOVD",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://dummy-sovd-server.onrender.com"
+    }
+  ],
+  "paths": {
+    "/about": {
+      "get": {
+        "summary": "Vehicle info",
+        "responses": {
+          "200": {
+            "description": "Vehicle information",
+            "content": {
+              "application/json": {
+                "example": {
+                  "name": "DemoCar",
+                  "version": "0.1",
+                  "description": "Test vehicle"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/components": {
+      "get": {
+        "summary": "List components",
+        "responses": {
+          "200": {
+            "description": "Components info",
+            "content": {
+              "application/json": {
+                "example": {
+                  "engine": {"status": "ok"},
+                  "battery": {"status": "charging"}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
