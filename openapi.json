@@ -22,7 +22,7 @@
                 "example": {
                   "name": "DemoCar",
                   "version": "0.2",
-                  "description": "Realistic demo vehicle with simulated CAN data"
+                  "description": "Realistic demo vehicle with simulated CAN data and web control"
                 }
               }
             }
@@ -39,11 +39,11 @@
             "content": {
               "application/json": {
                 "example": {
-                  "engine": "running",
+                  "engine": "stopped",
                   "brake": "released",
-                  "battery": {"voltage": 13.2, "status": "charging"},
-                  "rpm": 1200,
-                  "temperature": 78.5
+                  "battery": { "voltage": 12.6, "status": "idle" },
+                  "rpm": 0,
+                  "temperature": 25.0
                 }
               }
             }
@@ -57,15 +57,18 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/x-www-form-urlencoded": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "cmd": {"type": "string", "enum": ["START_ENGINE","STOP_ENGINE","APPLY_BRAKE","RELEASE_BRAKE"]}
+                  "cmd": {
+                    "type": "string",
+                    "enum": ["START_ENGINE", "STOP_ENGINE", "APPLY_BRAKE", "RELEASE_BRAKE"]
+                  }
                 },
                 "required": ["cmd"]
               },
-              "example": {"cmd": "START_ENGINE"}
+              "example": { "cmd": "START_ENGINE" }
             }
           }
         },
@@ -79,7 +82,7 @@
                   "vehicle_state": {
                     "engine": "running",
                     "brake": "released",
-                    "battery": {"voltage": 13.2, "status": "charging"},
+                    "battery": { "voltage": 13.2, "status": "charging" },
                     "rpm": 1200,
                     "temperature": 78.5
                   }
